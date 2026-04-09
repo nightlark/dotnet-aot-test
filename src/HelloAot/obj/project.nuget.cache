@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "dgSpecHash": "J6LEFm4HRzQ=",
+  "success": true,
+  "projectFilePath": "/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/HelloAot.csproj",
+  "expectedPackageFiles": [
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.dotnet.ilcompiler/7.0.20/microsoft.dotnet.ilcompiler.7.0.20.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.dotnet.ilcompiler/9.0.14/microsoft.dotnet.ilcompiler.9.0.14.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.net.illink.analyzers/7.0.100-1.23211.1/microsoft.net.illink.analyzers.7.0.100-1.23211.1.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.net.illink.tasks/7.0.100-1.23211.1/microsoft.net.illink.tasks.7.0.100-1.23211.1.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.net.illink.tasks/9.0.14/microsoft.net.illink.tasks.9.0.14.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/7.0.20/runtime.linux-x64.microsoft.dotnet.ilcompiler.7.0.20.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/9.0.14/runtime.linux-x64.microsoft.dotnet.ilcompiler.9.0.14.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.netcore.app.ref/7.0.20/microsoft.netcore.app.ref.7.0.20.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.netcore.app.runtime.linux-x64/7.0.20/microsoft.netcore.app.runtime.linux-x64.7.0.20.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.aspnetcore.app.ref/7.0.20/microsoft.aspnetcore.app.ref.7.0.20.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.aspnetcore.app.runtime.linux-x64/7.0.20/microsoft.aspnetcore.app.runtime.linux-x64.7.0.20.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/7.0.20/runtime.linux-x64.microsoft.dotnet.ilcompiler.7.0.20.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.netcore.app.host.linux-x64/7.0.20/microsoft.netcore.app.host.linux-x64.7.0.20.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.netcore.app.ref/9.0.14/microsoft.netcore.app.ref.9.0.14.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.netcore.app.runtime.linux-x64/9.0.14/microsoft.netcore.app.runtime.linux-x64.9.0.14.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.aspnetcore.app.ref/9.0.14/microsoft.aspnetcore.app.ref.9.0.14.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.aspnetcore.app.runtime.linux-x64/9.0.14/microsoft.aspnetcore.app.runtime.linux-x64.9.0.14.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/runtime.linux-x64.microsoft.dotnet.ilcompiler/9.0.14/runtime.linux-x64.microsoft.dotnet.ilcompiler.9.0.14.nupkg.sha512",
+    "/tmp/codeql-scratch-b95bbcc661d4b15d/dbs/csharp/working/packages/microsoft.netcore.app.host.linux-x64/9.0.14/microsoft.netcore.app.host.linux-x64.9.0.14.nupkg.sha512"
+  ],
+  "logs": []
+}
