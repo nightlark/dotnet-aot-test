@@ -24,8 +24,8 @@ jobs:
         include:
 
           # ── .NET 9.0 — most recent release ────────────────────────────────
-          # Adds linux-riscv64 (community/tier-3 target added in .NET 8).
           # win-x86 is not supported for NativeAOT and is excluded.
+          # linux-arm64 uses a native arm64 runner; linux-arm uses cross-compilation.
 
           - tfm: net9.0
             dotnet: "9.0.x"
@@ -35,20 +35,13 @@ jobs:
           - tfm: net9.0
             dotnet: "9.0.x"
             rid: linux-arm64
-            os: ubuntu-22.04
-            cross_pkgs: "gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu"
+            os: ubuntu-22.04-arm
 
           - tfm: net9.0
             dotnet: "9.0.x"
             rid: linux-arm
             os: ubuntu-22.04
-            cross_pkgs: "gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf"
-
-          - tfm: net9.0
-            dotnet: "9.0.x"
-            rid: linux-riscv64
-            os: ubuntu-22.04
-            cross_pkgs: "gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu"
+            cross_pkgs: "gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf libc6-dev-armhf-cross"
 
           - tfm: net9.0
             dotnet: "9.0.x"
@@ -81,6 +74,14 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends ${{ matrix.cross_pkgs }}
+
+      # clang uses the target triple "armv7-linux-gnueabihf" for linux-arm AOT,
+      # but binutils installs the linker as "arm-linux-gnueabihf-ld.bfd".
+      # Create the expected symlink so clang can find the cross-linker.
+      - name: Fix ARM cross-linker symlink
+        if: matrix.rid == 'linux-arm'
+        run: |
+          sudo ln -sf /usr/bin/arm-linux-gnueabihf-ld.bfd /usr/local/bin/armv7-linux-gnueabihf-ld.bfd
 
       - name: Setup .NET ${{ matrix.dotnet }}
         uses: actions/setup-dotnet@v4
