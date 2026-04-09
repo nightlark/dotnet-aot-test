@@ -1,0 +1,190 @@
+name: Build AOT Binaries
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # ── Main matrix ────────────────────────────────────────────────────────────
+  # Covers every platform / arch / .NET-version combination that NativeAOT
+  # officially supports.  Targets that require cross-compilation list the
+  # apt packages needed via `cross_pkgs`; those fields are empty/absent for
+  # native builds.
+  build:
+    name: "${{ matrix.tfm }} ${{ matrix.rid }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+
+          # ── .NET 7.0 — oldest version with production NativeAOT support ───
+          # Supported platforms: Windows x64/x86/arm64, Linux x64/arm/arm64,
+          # macOS x64/arm64.  (linux-riscv64 was not supported until .NET 8.)
+
+          - tfm: net7.0
+            dotnet: "7.0.x"
+            rid: linux-x64
+            os: ubuntu-22.04
+
+          - tfm: net7.0
+            dotnet: "7.0.x"
+            rid: linux-arm64
+            os: ubuntu-22.04
+            cross_pkgs: "gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu"
+
+          - tfm: net7.0
+            dotnet: "7.0.x"
+            rid: linux-arm
+            os: ubuntu-22.04
+            cross_pkgs: "gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf"
+
+          - tfm: net7.0
+            dotnet: "7.0.x"
+            rid: win-x64
+            os: windows-latest
+
+          - tfm: net7.0
+            dotnet: "7.0.x"
+            rid: win-x86
+            os: windows-latest
+
+          - tfm: net7.0
+            dotnet: "7.0.x"
+            rid: win-arm64
+            os: windows-latest
+
+          - tfm: net7.0
+            dotnet: "7.0.x"
+            rid: osx-x64
+            os: macos-13
+
+          - tfm: net7.0
+            dotnet: "7.0.x"
+            rid: osx-arm64
+            os: macos-latest
+
+          # ── .NET 9.0 — most recent release ────────────────────────────────
+          # Adds linux-riscv64 (community/tier-3 target added in .NET 8).
+
+          - tfm: net9.0
+            dotnet: "9.0.x"
+            rid: linux-x64
+            os: ubuntu-22.04
+
+          - tfm: net9.0
+            dotnet: "9.0.x"
+            rid: linux-arm64
+            os: ubuntu-22.04
+            cross_pkgs: "gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu"
+
+          - tfm: net9.0
+            dotnet: "9.0.x"
+            rid: linux-arm
+            os: ubuntu-22.04
+            cross_pkgs: "gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf"
+
+          - tfm: net9.0
+            dotnet: "9.0.x"
+            rid: linux-riscv64
+            os: ubuntu-22.04
+            cross_pkgs: "gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu"
+
+          - tfm: net9.0
+            dotnet: "9.0.x"
+            rid: win-x64
+            os: windows-latest
+
+          - tfm: net9.0
+            dotnet: "9.0.x"
+            rid: win-x86
+            os: windows-latest
+
+          - tfm: net9.0
+            dotnet: "9.0.x"
+            rid: win-arm64
+            os: windows-latest
+
+          - tfm: net9.0
+            dotnet: "9.0.x"
+            rid: osx-x64
+            os: macos-13
+
+          - tfm: net9.0
+            dotnet: "9.0.x"
+            rid: osx-arm64
+            os: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # ── Cross-compilation toolchain (Linux targets only) ──────────────────
+      # The ubuntu runners already include clang/llvm; we only need the
+      # target-architecture binutils + gcc-multilib for the sysroot/linker.
+      - name: Install cross-compilation toolchain
+        if: matrix.cross_pkgs != ''
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ${{ matrix.cross_pkgs }}
+
+      - name: Setup .NET ${{ matrix.dotnet }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+
+      # ── Build ─────────────────────────────────────────────────────────────
+      - name: Publish NativeAOT binary
+        run: >-
+          dotnet publish src/HelloAot
+          -f ${{ matrix.tfm }}
+          -r ${{ matrix.rid }}
+          -c Release
+          -o artifacts/${{ matrix.rid }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HelloAot-${{ matrix.tfm }}-${{ matrix.rid }}
+          path: artifacts/${{ matrix.rid }}/
+          if-no-files-found: error
+
+  # ── FreeBSD x64 (net9.0, best-effort) ─────────────────────────────────────
+  # FreeBSD support was added as a community/tier-3 target in .NET 9.
+  # We run a real FreeBSD VM via vmactions so we build natively — no
+  # cross-compilation sysroot hassle.  The job is allowed to fail so it
+  # does not block the overall workflow.
+  build-freebsd:
+    name: "net9.0 freebsd-x64"
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build on FreeBSD
+        id: freebsd-build
+        uses: vmactions/freebsd-vm@v1
+        with:
+          usesh: true
+          # copyback: copies files from the VM back to the host runner so the
+          # upload-artifact step (which runs on the host) can find them.
+          copyback: true
+          prepare: |
+            # Install .NET 9 SDK and the LLVM clang toolchain for NativeAOT
+            pkg install -y dotnet-sdk-9 llvm
+          run: |
+            set -e
+            dotnet publish src/HelloAot \
+              -f net9.0 \
+              -r freebsd-x64 \
+              -c Release \
+              -o artifacts/freebsd-x64
+
+      - name: Upload artifact
+        if: always() && steps.freebsd-build.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: HelloAot-net9.0-freebsd-x64
+          path: artifacts/freebsd-x64/
+          if-no-files-found: warn
