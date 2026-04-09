@@ -1,0 +1,15 @@
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/bin/Debug/net9.0/HelloAot
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/bin/Debug/net9.0/HelloAot.deps.json
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/bin/Debug/net9.0/HelloAot.runtimeconfig.json
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/bin/Debug/net9.0/HelloAot.dll
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/bin/Debug/net9.0/HelloAot.pdb
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/HelloAot.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/HelloAot.AssemblyInfoInputs.cache
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/HelloAot.AssemblyInfo.cs
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/HelloAot.csproj.CoreCompileInputs.cache
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/HelloAot.sourcelink.json
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/HelloAot.dll
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/refint/HelloAot.dll
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/HelloAot.pdb
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/HelloAot.genruntimeconfig.cache
+/home/runner/work/dotnet-aot-test/dotnet-aot-test/src/HelloAot/obj/Debug/net9.0/ref/HelloAot.dll
